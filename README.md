@@ -4,18 +4,14 @@ A mini-project exploring bit trees (a form of binary tree) and their use in tran
 
 **Authors**
 
-* Your name here
+* Maral Bat-Erdene
 * Samuel A. Rebelsky (starter code)
 
 **Acknowledgements**
 
 *
-*
-*
 
 **Instructions for use**
-
-_Please insert instructions here._
 
 ---
 

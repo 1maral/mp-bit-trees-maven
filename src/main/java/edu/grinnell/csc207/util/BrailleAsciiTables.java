@@ -1,13 +1,15 @@
 package edu.grinnell.csc207.util;
 
 import java.io.ByteArrayInputStream;
-import java.io.InputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.PrintWriter;
 
 /**
+ * Utility class for converting between ASCII, Braille, and Unicode.
+ * Set up mappings for ASCII-to-Braille, Braille-to-ASCII, and Braille-to-Unicode.
  *
- *
- * @author Your Name Here
+ * @author Maral Bat-Erdene
  * @author Samuel A. Rebelsky
  */
 public class BrailleAsciiTables {
@@ -179,17 +181,17 @@ public class BrailleAsciiTables {
   // +---------------+
 
   /**
-   *
+   * ASCII-to-Braille conversion tree.
    */
   static BitTree a2bTree = null;
 
   /**
-   *
+   * Braille-to-ASCII conversion tree.
    */
   static BitTree b2aTree = null;
 
   /**
-   *
+   * Braille-to-Unicode conversion tree.
    */
   static BitTree b2uTree = null;
 
@@ -202,14 +204,40 @@ public class BrailleAsciiTables {
   // +----------------+
 
   /**
-   *
+   * Converts an ASCII character to its Braille representation.
+   * 
+   * @param letter the ASCII character to convert
+   * @return the Braille representation as a binary string
    */
   public static String toBraille(char letter) {
-    return "";  // STUB
+    // Make sure we've loaded the ASCII-to-braille tree.
+    if (null == a2bTree) {
+      a2bTree = new BitTree(8);
+      InputStream a2bStream = new ByteArrayInputStream(a2b.getBytes());
+      a2bTree.load(a2bStream);
+      try {
+        a2bStream.close();
+      } catch (IOException e) {
+        // We don't care if we can't close the stream.
+      } // try/catch
+    } // if
+
+    try {
+      String binaryBraille = Integer.toBinaryString(letter);
+      return a2bTree.get("0" + binaryBraille);
+    } catch (Exception e) {
+      PrintWriter pen = new PrintWriter(System.out);
+      pen.println("Ascii-to-braille Tree: ");
+      a2bTree.dump(pen);
+      throw new RuntimeException("ASCII-to-braille failed: " + letter);
+    } // try/catch
   } // toBraille(char)
 
   /**
-   *
+   * Converts a Braille bit pattern to its ASCII representation.
+   * 
+   * @param bits the Braille bit pattern
+   * @return the corresponding ASCII character as a string
    */
   public static String toAscii(String bits) {
     // Make sure we've loaded the braille-to-ASCII tree.
@@ -223,13 +251,36 @@ public class BrailleAsciiTables {
         // We don't care if we can't close the stream.
       } // try/catch
     } // if
-    return "";  // STUB
+  
+    try {
+      return b2aTree.get(bits);
+    } catch (Exception e) {
+      throw new RuntimeException("braille-to-ASCII failed: " + bits);
+    } // try/catch
   } // toAscii(String)
 
   /**
-   *
+   * Converts a Braille bit pattern to its Unicode representation.
+   * 
+   * @param bits the Braille bit pattern
+   * @return the corresponding Unicode character as a string
    */
   public static String toUnicode(String bits) {
-    return "";  // STUB
+    // Make sure we've loaded the braille-to-Unicode tree.
+    if (null == b2uTree) {
+      b2uTree = new BitTree(6);
+      InputStream b2uStream = new ByteArrayInputStream(b2u.getBytes());
+      b2uTree.load(b2uStream);
+      try {
+        b2uStream.close();
+      } catch (IOException e) {
+        // We don't care if we can't close the stream.
+      } // try/catch
+    } // if
+    try {
+      return b2uTree.get(bits);
+    } catch (Exception e) {
+      throw new RuntimeException("braille-to-Unicode failed: " + bits);
+    } // try/catch
   } // toUnicode(String)
 } // BrailleAsciiTables
