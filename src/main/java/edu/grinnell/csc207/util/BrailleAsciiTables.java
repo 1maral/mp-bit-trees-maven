@@ -265,6 +265,7 @@ public class BrailleAsciiTables {
    * @param bits the Braille bit pattern
    * @return the corresponding Unicode character as a string
    */
+  @SuppressWarnings("UseSpecificCatch")
   public static String toUnicode(String bits) {
     // Make sure we've loaded the braille-to-Unicode tree.
     if (null == b2uTree) {
@@ -278,7 +279,7 @@ public class BrailleAsciiTables {
       } // try/catch
     } // if
     try {
-      return b2uTree.get(bits);
+      return new String(Character.toChars(Integer.parseInt(b2uTree.get(bits), 16)));
     } catch (Exception e) {
       throw new RuntimeException("braille-to-Unicode failed: " + bits);
     } // try/catch

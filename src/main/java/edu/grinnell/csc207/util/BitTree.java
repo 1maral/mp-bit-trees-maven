@@ -204,7 +204,7 @@ public class BitTree {
    */
   public void load(InputStream source) {
     if (source == null) {
-      throw new IllegalArgumentException("InputStream cannot be null.");
+      throw new IllegalArgumentException("Source cannot be null.");
     } // if
 
     try (Scanner scanner = new Scanner(source)) {
@@ -213,9 +213,7 @@ public class BitTree {
         if (line.length == 2) {
           String bits = line[0];
           String value = line[1];
-          if (isValid(bits)) {
-            set(bits, value);
-          } // if
+          set(bits, value);
         } // if
       } // while
     } catch (Exception ex) {
