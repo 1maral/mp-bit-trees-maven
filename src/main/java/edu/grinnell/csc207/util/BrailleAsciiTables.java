@@ -3,7 +3,6 @@ package edu.grinnell.csc207.util;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.PrintWriter;
 
 /**
  * Utility class for converting between ASCII, Braille, and Unicode.
@@ -223,13 +222,10 @@ public class BrailleAsciiTables {
     } // if
 
     try {
-      String binaryBraille = Integer.toBinaryString(letter);
-      return a2bTree.get("0" + binaryBraille);
+      String binaryBraille = String.format("%8s", Integer.toBinaryString((int) letter)).replace(' ', '0');
+      return a2bTree.get(binaryBraille);
     } catch (Exception e) {
-      PrintWriter pen = new PrintWriter(System.out);
-      pen.println("Ascii-to-braille Tree: ");
-      a2bTree.dump(pen);
-      throw new RuntimeException("ASCII-to-braille failed: " + letter);
+      throw new RuntimeException("ASCII-to-braille failed: No corresponding value for " + letter);
     } // try/catch
   } // toBraille(char)
 
@@ -255,7 +251,7 @@ public class BrailleAsciiTables {
     try {
       return b2aTree.get(bits);
     } catch (Exception e) {
-      throw new RuntimeException("braille-to-ASCII failed: " + bits);
+      throw new RuntimeException("braille-to-ASCII failed: No corresponding value for " + bits);
     } // try/catch
   } // toAscii(String)
 
@@ -281,7 +277,7 @@ public class BrailleAsciiTables {
     try {
       return new String(Character.toChars(Integer.parseInt(b2uTree.get(bits), 16)));
     } catch (Exception e) {
-      throw new RuntimeException("braille-to-Unicode failed: " + bits);
+      throw new RuntimeException("braille-to-Unicode failed: No corresponding value for " + bits);
     } // try/catch
   } // toUnicode(String)
 } // BrailleAsciiTables
