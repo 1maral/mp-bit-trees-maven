@@ -7,6 +7,8 @@ import edu.grinnell.csc207.util.BrailleAsciiTables;
 /**
  * This program converts between Braille, ASCII, and Unicode representations using
  * two terminal-line inputs.
+ * 
+ * @author Maral Bat-Erdene
  */
 public class BrailleASCII {
   // +---------------+-----------------------------------------------

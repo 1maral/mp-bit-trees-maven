@@ -3,6 +3,8 @@ package edu.grinnell.csc207.util;
 /**
  * A leaf node in a binary tree, representing an edge node with a specific value,
  * and no children.
+ * 
+ * @author Maral Bat-Erdene
  */
 public class BitTreeLeaf implements BitTreeNode {
   // +--------+------------------------------------------------------

@@ -3,6 +3,8 @@ package edu.grinnell.csc207.util;
 /**
  * An interior node of a binary tree, contains references to its left and right child nodes.
  * It does not hold any value.
+ * 
+ * @author Maral Bat-Erdene
  */
 public class BitTreeInteriorNode implements BitTreeNode {
   // +--------+------------------------------------------------------
